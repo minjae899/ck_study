@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>김준성의 홈페이지</title>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script>
+		$(function(){
+			$("#btn_login").click(login);
+			$("#btn_register").click(register);
+		});
+		var login = function(){
+		
+		}
+		var register = function(){
+			
+		}
+	</script>
+	<style>
+		.container{
+			text-align:center;
+			margin-top:20%;
+		}
+
+		input{
+			margin-top:5px;
+			margin-bottom:5px;
+		}
+
+		input[type='text'], input[type='password']{
+			width:30%;
+			height:40px;
+		}
+
+		input[type='button'], input[type='submit']{
+			width:100px;
+			height:30px;
+		}
+
+	</style>
+</head>
+<body>
+	<form action="/project001/mainServlet.do" method="post">
+		<div class="container">
+			<h1>input your id and password please.</h1>
+			<input type="text" id="user_id" placeholder="input your id" /><br/>
+			<input type="password" id="user_pass" placeholder="input your password" /><br/>
+			<input type="submit" id="btn_login" value="login" />
+			<input type="button" id="btn_register" value="register" /><br/>
+		</div>
+	</form>
+</body>
+</html>
