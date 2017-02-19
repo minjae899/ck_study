@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * 1.HttpServlet을 상속 받는다.
  * 2.doGet, doPost를 오버라이딩 한다.
- *
+ * 
  */
 public class MainController extends HttpServlet{
 
@@ -30,5 +30,10 @@ public class MainController extends HttpServlet{
 		System.out.println("hi servlet");
 		
 	}
-	
+	/*
+	 * 
+	 */
 }
+
+
+		

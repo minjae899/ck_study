@@ -2,6 +2,6 @@ package main.service;
 
 public interface MainService {
 
-	boolean doCheck();
+	boolean doCheck(String id);
 
 }

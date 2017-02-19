@@ -40,10 +40,31 @@ public class MainDAO {
 		
 	}
 	
+	public String selectSysdate(){
+		String result = "";
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append("SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD') FROM DUAL");
+		try {
+			ps = conn.prepareStatement(query.toString());
+			rs = ps.executeQuery();
+			if(rs.next()){
+				result = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public AttendVO selectAttend(String id){
 		Connection conn = jdbc.getConnection();
 		query = new StringBuilder(); 
-		query.append("SELECT ID, CHECK_DATE FROM ATTEND WHERE ID = ?");
+		query.append("SELECT ID");
+		query.append("	   , TO_CHAR(CHECK_DATE,'YYYY-MM-DD') ");
+		query.append("	FROM ATTEND ");
+		query.append(" WHERE ID = ? ");
+		query.append("	 AND TO_CHAR(CHECK_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')");
 		try {
 			System.out.println(query.toString());
 			ps = conn.prepareStatement(query.toString());
@@ -73,9 +94,9 @@ public class MainDAO {
 	public static void main(String[] args) {
 		MainDAO dao = new MainDAO();
 		
-		dao.insertCheck("chunkind");
-		
-		AttendVO avo = dao.selectAttend("chunkind");
+		/*dao.insertCheck("chunkind");
+		AttendVO avo = dao.selectAttend("chunkind");*/
+		System.out.println(dao.selectSysdate());
 		
 	}
 	

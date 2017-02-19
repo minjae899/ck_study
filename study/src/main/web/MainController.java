@@ -1,7 +1,9 @@
 package main.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +24,43 @@ public class MainController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String command = null;
+		String id = null;
+		String pw = null;
 		MainService service = null;
 		
 		command = req.getParameter("command");
+		id = req.getParameter("user_id");
+		pw = req.getParameter("user_pw");
+		
+		resp.setContentType("text/html");
+		req.setCharacterEncoding("utf-8");
+		resp.setCharacterEncoding("utf-8");
 		
 		if(command.equals("check")){
 			service = new MainServiceImpl();
-			service.doCheck();
+			boolean result = service.doCheck(id);
+			
+			//서블릿 버전
+			//viewCheck(req, resp);
+			//jsp 버전
+			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/viewCheck.jsp");
+			view.forward(req, resp);
 		}
+	}
+	
+	public void viewCheck(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		PrintWriter out = resp.getWriter();
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("	<meta charset=\"utf-8\">");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("	<h1>출석체크 완료!!</h1>");
+		out.println("</body>");
+		out.println("</html>");
+		out.flush();
+		out.close();
 	}
 	
 }
