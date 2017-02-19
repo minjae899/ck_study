@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+.ckbtn{
+	text-decoration: none;
+	font-size:2rem;
+	color:white;
+	padding:10px 20px 10px 20px;
+	margin:10px;
+	display:inline-block;
+	border-radius: 10px;
+	transition:all 0.1s;
+	text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
+	font-family: 'Lobster', cursive;
+}
+.ckbtn:active{
+	transform: translateY(3px);
+}
+.ckbtn.blue{
+	background-color: #1f75d9;
+	border-bottom:5px solid #165195;
+}
+.ckbtn.blue:active{
+	border-bottom:2px solid #165195;
+}
+.ckbtn.red{
+	background-color: #ff521e;
+	border-bottom:5px solid #c1370e;
+}
+.ckbtn.red:active{
+	border-bottom:2px solid #c1370e;
+}
+
+.ckbtn.orange{
+	background-color: #FFBB00;
+	border-bottom:5px solid #DB9700;
+}
+.ckbtn.orange:active{
+	border-bottom:2px solid #DB9700;
+}
+input{
+	width: 400px;
+	height: 50px;
+}
+.login_container{
+	text-align: center;
+	margin-top: 15%;
+}
