@@ -1,8 +1,11 @@
 package main.service.impl;
 
+import java.util.List;
+
 import main.dao.MainDAO;
 import main.service.MainService;
 import main.vo.AttendVO;
+import main.vo.MemberVO;
 
 public class MainServiceImpl implements MainService{
 
@@ -24,6 +27,12 @@ public class MainServiceImpl implements MainService{
 		MainService service = new MainServiceImpl();
 		
 		service.doCheck("chunkind");
+	}
+
+	@Override
+	public List<MemberVO> selectAllAttendList() {
+		dao.
+		return null;
 	}
 
 }

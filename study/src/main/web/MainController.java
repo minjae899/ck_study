@@ -2,6 +2,7 @@ package main.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.service.MainService;
 import main.service.impl.MainServiceImpl;
+import main.vo.MemberVO;
 
 public class MainController extends HttpServlet{
 
@@ -26,7 +28,7 @@ public class MainController extends HttpServlet{
 		String command = null;
 		String id = null;
 		String pw = null;
-		MainService service = null;
+		MainService service = new MainServiceImpl();
 		
 		command = req.getParameter("command");
 		id = req.getParameter("user_id");
@@ -37,7 +39,6 @@ public class MainController extends HttpServlet{
 		resp.setCharacterEncoding("utf-8");
 		
 		if(command.equals("check")){
-			service = new MainServiceImpl();
 			boolean result = service.doCheck(id);
 			
 			//서블릿 버전
@@ -45,6 +46,10 @@ public class MainController extends HttpServlet{
 			//jsp 버전
 			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/viewCheck.jsp");
 			view.forward(req, resp);
+		}
+		
+		else if(command.equals("list")){
+			List<MemberVO> attendList = service.selectAllAttendList();
 		}
 	}
 	

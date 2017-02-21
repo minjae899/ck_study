@@ -4,16 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jdbc.util.JDBCUtil;
 import main.vo.AttendVO;
-import main.vo.MainVO;
+import main.vo.MemberVO;
 
 public class MainDAO {
 
 	private JDBCUtil jdbc = new JDBCUtil();
 	private AttendVO avo = null;
-	private MainVO mvo = null;
+	private MemberVO mvo = null;
 	private StringBuilder query = null;
 	private Connection conn = null;
 	private PreparedStatement ps = null;
@@ -89,6 +91,16 @@ public class MainDAO {
 		}
 		
 		return avo;
+	}
+	
+	public List<MemberVO> selectAllMember(){
+		List<MemberVO> allList = new ArrayList<MemberVO>();
+		
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append("");
+		
+		return allList;
 	}
 	
 	public static void main(String[] args) {

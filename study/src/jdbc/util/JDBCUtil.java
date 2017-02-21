@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.vo.MainVO;
+import main.vo.MemberVO;
 
 public class JDBCUtil {
 	
@@ -44,12 +44,12 @@ public class JDBCUtil {
 		closeAll(conn, ps);
 	}
 	
-	public MainVO getMember(String id) throws Exception{	// 여기는 왜 void가 아니라 리턴값이 CustVO임?
+	public MemberVO getMember(String id) throws Exception{	// 여기는 왜 void가 아니라 리턴값이 CustVO임?
 		//JDBC에 필요한 변수들
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		MainVO vo = new MainVO();
+		MemberVO vo = new MemberVO();
 		
 		//DB연결을 위한 JDBC4단계
 		//1.드라이버 로딩

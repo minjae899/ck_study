@@ -1,6 +1,8 @@
 package main.vo;
 
-public class MainVO {
+import java.util.List;
+
+public class MemberVO {
 	
 	private int seq;
 	private String name;
@@ -11,6 +13,7 @@ public class MainVO {
 	private String tell;
 	private String registerDate;
 	private String updateDate;
+	private List<AttendVO> attendList;
 	
 	public int getSeq() {
 		return seq;
@@ -66,11 +69,16 @@ public class MainVO {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-	
+	public List<AttendVO> getAttendList() {
+		return attendList;
+	}
+	public void setAttendList(List<AttendVO> attendList) {
+		this.attendList = attendList;
+	}
 	@Override
 	public String toString() {
-		return "MainVO [seq=" + seq + ", name=" + name + ", id=" + id + ", pw=" + pw + ", age=" + age + ", gender="
-				+ gender + ", tell=" + tell + ", registerDate=" + registerDate + ", updateDate=" + updateDate + "]";
+		return "MemberVO [seq=" + seq + ", name=" + name + ", id=" + id + ", pw=" + pw + ", age=" + age + ", gender="
+				+ gender + ", tell=" + tell + ", registerDate=" + registerDate + ", updateDate=" + updateDate
+				+ ", attendList=" + attendList.toString() + "]";
 	}
-	
 }

@@ -13,6 +13,7 @@ INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('chunkind', SYSDATE);
 
 DELETE FROM ATTEND;
 
+select * from attend;
 
 
-
+delete from ATTEND where rownum = 1;
