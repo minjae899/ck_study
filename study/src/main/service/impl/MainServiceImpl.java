@@ -31,7 +31,7 @@ public class MainServiceImpl implements MainService{
 
 	@Override
 	public List<MemberVO> selectAllAttendList() {
-		dao.
+		//dao.
 		return null;
 	}
 

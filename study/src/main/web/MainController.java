@@ -28,17 +28,19 @@ public class MainController extends HttpServlet{
 		String command = null;
 		String id = null;
 		String pw = null;
+		
 		MainService service = new MainServiceImpl();
 		
 		command = req.getParameter("command");
 		id = req.getParameter("user_id");
 		pw = req.getParameter("user_pw");
 		
-		resp.setContentType("text/html");
-		req.setCharacterEncoding("utf-8");
-		resp.setCharacterEncoding("utf-8");
+		if(command.equals("main")){
+			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/main.jsp");
+			view.forward(req, resp);
+		}
 		
-		if(command.equals("check")){
+		else if(command.equals("check")){
 			boolean result = service.doCheck(id);
 			
 			//서블릿 버전
@@ -51,9 +53,17 @@ public class MainController extends HttpServlet{
 		else if(command.equals("list")){
 			List<MemberVO> attendList = service.selectAllAttendList();
 		}
+		
+		else if(command.equals("listAjax")){
+			System.out.println("hi");
+		}
 	}
 	
 	public void viewCheck(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		resp.setContentType("text/html");
+		req.setCharacterEncoding("utf-8");
+		resp.setCharacterEncoding("utf-8");
+		
 		PrintWriter out = resp.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
