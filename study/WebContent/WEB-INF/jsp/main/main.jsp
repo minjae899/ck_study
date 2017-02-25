@@ -22,7 +22,6 @@ function register(){
 	alert("register");
 }
 function list(){
-	alert("hi");
 	$.ajax({
 		url : "/study/mainServlet.do?command=listAjax",
 		data : {},

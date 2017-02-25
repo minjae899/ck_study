@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .contentWrap{
+            position: relative;
+            padding: 10px;
+            min-height: 600px;
+            background-color: bisque;
+        }
+        .box{
+            border: 1px solid #adb8c0;
+        }
+        /*.tabWrap{
+            position: relative;
+            min-height: 200px;
+            clear: both;
+        }*/
+        .tab{
+            float: left;
+            width: 50%;
+        }
+        .tab [type="radio"]{
+            display: none;
+            /*line-height: normal;*/
+        }
+        .tab label.labelTab{
+            display: inline-block;
+            width: 100%;
+            height: 50px;
+            line-height: 40px;
+            position: relative;
+            background-color: #f3f3f3;
+            border-top: solid 1px #ccc;
+            border-bottom: solid 1px #ccc;
+            border-right: solid 1px #ccc;
+            margin-bottom: 0px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .tabContent{
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: #fff;
+            right: 0;
+            bottom: 0;
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contentWrap box">
+        <div class="tabWrap">
+            <div class="tab">
+                <input id="policy" name="tabGroup" checked="" type="radio">
+                <label for="policy" class="labelTab">정책제안</label>
+                <div class="tabContent">
+                    <ul>
+                        <li class="noticeList">
+                            <div class="noticeListWrap">
+                                안녕
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab">
+                <input id="news" name="tabGroup" type="radio">
+                <label for="news" class="labelTab last">소식나눔</label>
+                <div class="tabContent">
+                    <ul>
+                        <li class="noticeList">
+                            <div class="noticeListWrap">
+                                하이
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
