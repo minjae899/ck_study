@@ -55,7 +55,8 @@ public class MainController extends HttpServlet{
 		}
 		
 		else if(command.equals("listAjax")){
-			System.out.println("hi");
+			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/listFragment.jsp");
+			view.forward(req, resp);
 		}
 	}
 	
