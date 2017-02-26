@@ -98,9 +98,9 @@ function list(){
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+				<h4 class="modal-title" id="myLargeModalLabel">지각비 현황</h4>
 			</div>
-			<div class="modal-body"></div>
+			<div class="modal-body">로딩중....</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

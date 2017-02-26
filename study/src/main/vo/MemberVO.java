@@ -13,8 +13,10 @@ public class MemberVO {
 	private String tell;
 	private String registerDate;
 	private String updateDate;
+	private String gijunDate;
 	private String checkDate;
 	private String checkTime;
+	private String penalty;
 	private List<AttendVO> attendList;
 	
 	public int getSeq() {
@@ -88,5 +90,24 @@ public class MemberVO {
 	}
 	public void setCheckTime(String checkTime) {
 		this.checkTime = checkTime;
+	}
+	public String getGijunDate() {
+		return gijunDate;
+	}
+	public void setGijunDate(String gijunDate) {
+		this.gijunDate = gijunDate;
+	}
+	public String getPenalty() {
+		return penalty;
+	}
+	public void setPenalty(String penalty) {
+		this.penalty = penalty;
+	}
+	@Override
+	public String toString() {
+		return "MemberVO [seq=" + seq + ", name=" + name + ", id=" + id + ", pw=" + pw + ", age=" + age + ", gender="
+				+ gender + ", tell=" + tell + ", registerDate=" + registerDate + ", updateDate=" + updateDate
+				+ ", gijunDate=" + gijunDate + ", checkDate=" + checkDate + ", checkTime=" + checkTime + ", penalty="
+				+ penalty + ", attendList=" + attendList + "]";
 	}
 }

@@ -3,6 +3,9 @@ package main.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import main.dao.JDBCMainDAO;
 import main.service.MainService;
@@ -26,15 +29,32 @@ public class MainServiceImpl implements MainService{
 	}
 	
 	@Override
-	public HashMap<String, ArrayList<MemberVO>> selectAllMember() {
+	public List<HashMap<String, ArrayList<MemberVO>>> selectAllMember() {
 		
-		HashMap<String, ArrayList<MemberVO>> result = new HashMap<String, ArrayList<MemberVO>>();
+		List<HashMap<String, ArrayList<MemberVO>>> result = new ArrayList<HashMap<String, ArrayList<MemberVO>>>();
 		
-		ArrayList<String> dataList = jdbcDao.selectCurrentDate();
+		TreeSet<String> gijunDate = new TreeSet<String>();
+		List<MemberVO> list = jdbcDao.selectAttendCheckAllMember(gijunDate);
 		
-		for(int i=0; i<dataList.size(); i++){
-			ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) jdbcDao.selectMemberByDate(dataList.get(i));
-			if(memberList.size() > 0) result.put(dataList.get(i), memberList);
+		NavigableSet<String> gijunDateDESC = gijunDate.descendingSet();
+		
+		String rGijun = gijunDateDESC.toString().replace("[", "").replace("]", "");
+		String[] splitGijun = rGijun.split(", ");
+		
+		//int s = splitGijun.length;
+		int s = jdbcDao.selectMemberCnt();
+		int cnt = 0;
+		ArrayList<MemberVO> containList = new ArrayList<MemberVO>();
+		HashMap<String, ArrayList<MemberVO>> obj = new HashMap<String, ArrayList<MemberVO>>();
+		for(int i=1; i<=list.size(); i++){
+			containList.add(list.get(i-1));
+			if(i%s == 0 && containList.size()>1){
+				obj.put(splitGijun[cnt], containList);
+				result.add(obj);
+				obj = new HashMap<String, ArrayList<MemberVO>>();
+				containList = new ArrayList<MemberVO>();
+				++cnt;
+			}
 		}
 		
 		return result;
@@ -43,7 +63,8 @@ public class MainServiceImpl implements MainService{
 	public static void main(String[] args) {
 		MainService service = new MainServiceImpl();
 		
-		service.doCheck("chunkind");
+		//service.doCheck("chunkind");
+		//System.out.println(service.selectAllMember().toString());
 
 	}
 }

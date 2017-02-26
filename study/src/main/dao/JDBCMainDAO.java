@@ -1,13 +1,13 @@
 package main.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import jdbc.util.JDBCUtil;
 import main.vo.AttendVO;
@@ -35,11 +35,7 @@ public class JDBCMainDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				jdbc.closeAll(conn, ps);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			jdbc.closeAll(conn, ps);
 		}
 		
 	}
@@ -54,6 +50,23 @@ public class JDBCMainDAO {
 			rs = ps.executeQuery();
 			if(rs.next()){
 				result = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int selectMemberCnt(){
+		int result = 0;
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append("SELECT COUNT(1) FROM MEMBER");
+		try {
+			ps = conn.prepareStatement(query.toString());
+			rs = ps.executeQuery();
+			if(rs.next()){
+				result = Integer.parseInt(rs.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,131 +98,109 @@ public class JDBCMainDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			try {
-				jdbc.closeAll(conn, ps, rs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			jdbc.closeAll(conn, ps, rs);
 		}
 		
 		return avo;
 	}
 	
-	public List<MemberVO> selectAllMember(){
-		List<MemberVO> allList = new ArrayList<MemberVO>();
-		
+	public List<MemberVO> selectAttendCheckAllMember(Set<String> gijunDate){
+		List<MemberVO> list = null;
+		MemberVO vo = null;
 		Connection conn = jdbc.getConnection();
-		query = new StringBuilder();
-		query.append("");
 		
-		return allList;
-	}
-	
-	public List<MemberVO> selectMemberByDate(String targetDate){
-		List<MemberVO> memberList = new ArrayList<MemberVO>();
-		Connection conn = jdbc.getConnection();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT A.SEQ");
+		query.append("SELECT A.ID");
 		query.append("	   , A.NAME");
-		query.append("	   , A.ID");
-		query.append("	   , A.PW");
-		query.append("	   , A.AGE");
 		query.append("	   , A.TELL");
-		query.append("	   , A.REGISTER_DATE");
-		query.append("	   , A.UPDATE_DATE");
-		query.append("	   , B.CHECK_DATE");
-		query.append("	   , TO_CHAR(B.CHECK_DATE, 'HH24:MI') AS CHECK_TIME");
-		query.append("  FROM MEMBER A, ATTEND B");
-		query.append(" WHERE A.ID = B.ID");
-		query.append("   AND TO_CHAR(B.CHECK_DATE,'YYYY-MM-DD') = ?");
-
+		query.append("	   , C.CHECK_DATE AS GIJUN_DATE");
+		query.append("	   , (");
+		query.append("	 		SELECT MIN(TO_CHAR(B.CHECK_DATE, 'YYYY-MM-DD HH24:MI'))");
+		query.append("	 		  FROM ATTEND B");
+		query.append("	 		 WHERE A.ID = B.ID");
+		query.append("	 		   AND TO_CHAR(B.CHECK_DATE, 'YYYY-MM-DD') = C.CHECK_DATE");
+		query.append("	     ) AS ATTEND_DATE");
+		query.append("  FROM MEMBER A");
+		query.append("     , (");
+		query.append("  		SELECT TO_CHAR(SUM.CHECK_DATE,'YYYY-MM-DD') AS CHECK_DATE");
+		query.append("			  FROM (");
+		query.append("						SELECT TO_DATE((SELECT TO_CHAR(SYSDATE,'YYYY') || '0101' FROM DUAL),'YYYYMMDD') + (ROWNUM-1) AS CHECK_DATE");
+		query.append("							 , TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS CURRENT_DATE");
+		query.append("						  FROM DUAL CONNECT BY LEVEL <=365");
+		query.append("				   ) SUM");
+		query.append("			 WHERE TO_CHAR(CHECK_DATE, 'D') = 7");
+		query.append("			   AND CHECK_DATE BETWEEN TO_DATE((SELECT TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'DD') + 1 ,'YYYY-MM-DD') FROM DUAL),'YYYY-MM-DD') AND CURRENT_DATE");
+		query.append("			 ORDER BY CHECK_DATE DESC");
+		query.append("  	  ) C");
+		
 		try{
 			System.out.println(query.toString());
 			ps = conn.prepareStatement(query.toString());
-			ps.setString(1, targetDate);
-			
 			rs = ps.executeQuery();
 			
+			list = new ArrayList<MemberVO>();
 			while(rs.next()){
-				MemberVO mvo = new MemberVO();
-				mvo.setSeq(rs.getInt(1));
-				mvo.setName(rs.getString(2));
-				mvo.setId(rs.getString(3));
-				mvo.setPw(rs.getString(4));
-				mvo.setAge(rs.getInt(5));
-				mvo.setTell(rs.getString(6));
-				mvo.setRegisterDate(rs.getString(7));
-				mvo.setUpdateDate(rs.getString(8));
-				mvo.setCheckDate(rs.getString(9));
-				mvo.setCheckTime(rs.getString(10));
-				memberList.add(mvo);
+				vo = new MemberVO();
+				vo.setId(rs.getString(1));
+				vo.setName(rs.getString(2));
+				vo.setTell(rs.getString(3));
+				vo.setGijunDate(rs.getString(4));
+				gijunDate.add(rs.getString(4));
+				if(null != rs.getString(5)){
+					vo.setCheckDate(rs.getString(5).substring(0, 10));
+					vo.setCheckTime(rs.getString(5).substring(11, rs.getString(5).length()));
+					vo.setPenalty(sumPenalty(rs.getString(5)));
+				}
+				list.add(vo);
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			try {
-				jdbc.closeAll(conn, ps, rs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			jdbc.closeAll(conn, ps, rs);
 		}
 		
-		return memberList;
+		return list;
 	}
 	
-	public ArrayList<String> selectCurrentDate(){
-		List<String> list = new ArrayList<String>();
+	//과금발생 로직
+	public String sumPenalty(String fullDate){
+		String result = "";
+		int penaltyUnit = 100; //분당 지각 비용
+		int penaltyMax = 3000; //
 		
-		Connection conn = jdbc.getConnection();
-		StringBuilder query = new StringBuilder();
-		query.append("SELECT TO_CHAR(SUM.CHECK_DATE,'YYYY-MM-DD') AS CHECK_DATE");
-		query.append("  FROM (");
-		query.append("			SELECT TO_DATE((SELECT TO_CHAR(SYSDATE,'YYYY') || '0101' FROM DUAL),'YYYYMMDD') + (ROWNUM-1) AS CHECK_DATE");
-		query.append("				 , TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS CURRENT_DATE");
-		query.append("			  FROM DUAL CONNECT BY LEVEL <=365");
-		query.append("	     ) SUM");
-		query.append(" WHERE TO_CHAR(CHECK_DATE, 'D') = 7");
-		query.append("   AND CHECK_DATE BETWEEN TO_DATE('2017-02-04','YYYY-MM-DD') AND CURRENT_DATE");
+		int hh = 0;
+		int mm = 0;
 		
 		try{
-			System.out.println(query.toString());
-			ps = conn.prepareStatement(query.toString());
-			rs = ps.executeQuery();
+			hh = Integer.parseInt(fullDate.substring(11, 13));
+			mm = Integer.parseInt(fullDate.substring(14, 16));
 			
-			list = new ArrayList<String>();
-			while(rs.next()){
-				list.add(rs.getString(1));
+			if(hh >= 9){
+				if(mm == 0){
+					result = "";
+				}else if(mm>0 && mm<30){
+					result = (mm * penaltyUnit) + "";
+				}else{
+					result = penaltyMax + "";
+				}
 			}
 			
+		}catch(NullPointerException e){
+			result = "3000";
 		}catch(Exception e){
-			
-		}finally{
-			try {
-				jdbc.closeAll(conn, ps, rs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
-		return (ArrayList<String>) list;
+		
+		return result;
 	}
 	
 	public static void main(String[] args) {
 		JDBCMainDAO jdbcDao = new JDBCMainDAO();
 		
-		/*dao.insertCheck("chunkind");
-		AttendVO avo = jdbcDao.selectAttend("chunkind");*/
-		//System.out.println(jdbcDao.selectCurrentDate());
-		
-		ArrayList<String> dataList = jdbcDao.selectCurrentDate();
-		HashMap<String, ArrayList<MemberVO>> result = new HashMap<String, ArrayList<MemberVO>>();
-		
-		for(int i=0; i<dataList.size(); i++){
-			ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) jdbcDao.selectMemberByDate(dataList.get(i));
-			if(memberList.size() > 0) result.put(dataList.get(i), memberList);
-		}
-		
-		System.out.println(result.toString());
+		Set<String> gijunDate = new TreeSet<String>();
+		List<MemberVO> list = jdbcDao.selectAttendCheckAllMember(gijunDate);
+		System.out.println(list.toString());
 		
 		
 	}

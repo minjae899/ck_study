@@ -30,17 +30,29 @@ public class JDBCUtil {
 		return conn;
 	}
 	
-	public void closeAll(Connection conn, PreparedStatement ps) throws SQLException{
+	public void closeAll(Connection conn, PreparedStatement ps){
 		if(conn != null){
-			conn.close();
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}if(ps !=null){
-			ps.close();
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	public void closeAll(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException{
+	public void closeAll(Connection conn, PreparedStatement ps, ResultSet rs){
 		if(rs != null){
-			rs.close();
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		closeAll(conn, ps);
 	}

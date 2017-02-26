@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,9 +58,9 @@ public class MainController extends HttpServlet{
 		}*/
 		
 		else if(command.equals("listAjax")){
-			HashMap<String, ArrayList<MemberVO>> attendList = service.selectAllMember();
+			List<HashMap<String, ArrayList<MemberVO>>> list = service.selectAllMember();
 			
-			req.setAttribute("list", attendList);
+			req.setAttribute("resultList", list);
 			
 			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/listFragment.jsp");
 			view.forward(req, resp);
