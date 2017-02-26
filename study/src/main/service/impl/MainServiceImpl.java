@@ -1,5 +1,7 @@
 package main.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import main.dao.JDBCMainDAO;
@@ -23,16 +25,25 @@ public class MainServiceImpl implements MainService{
 		return result;
 	}
 	
+	@Override
+	public HashMap<String, ArrayList<MemberVO>> selectAllMember() {
+		
+		HashMap<String, ArrayList<MemberVO>> result = new HashMap<String, ArrayList<MemberVO>>();
+		
+		ArrayList<String> dataList = jdbcDao.selectCurrentDate();
+		
+		for(int i=0; i<dataList.size(); i++){
+			ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) jdbcDao.selectMemberByDate(dataList.get(i));
+			if(memberList.size() > 0) result.put(dataList.get(i), memberList);
+		}
+		
+		return result;
+	}
+	
 	public static void main(String[] args) {
 		MainService service = new MainServiceImpl();
 		
 		service.doCheck("chunkind");
-	}
 
-	@Override
-	public List<MemberVO> selectAllAttendList() {
-		//jdbcDao.
-		return null;
 	}
-
 }

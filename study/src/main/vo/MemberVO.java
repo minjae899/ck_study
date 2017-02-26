@@ -13,6 +13,8 @@ public class MemberVO {
 	private String tell;
 	private String registerDate;
 	private String updateDate;
+	private String checkDate;
+	private String checkTime;
 	private List<AttendVO> attendList;
 	
 	public int getSeq() {
@@ -75,10 +77,16 @@ public class MemberVO {
 	public void setAttendList(List<AttendVO> attendList) {
 		this.attendList = attendList;
 	}
-	@Override
-	public String toString() {
-		return "MemberVO [seq=" + seq + ", name=" + name + ", id=" + id + ", pw=" + pw + ", age=" + age + ", gender="
-				+ gender + ", tell=" + tell + ", registerDate=" + registerDate + ", updateDate=" + updateDate
-				+ ", attendList=" + attendList.toString() + "]";
+	public String getCheckDate() {
+		return checkDate;
+	}
+	public void setCheckDate(String checkDate) {
+		this.checkDate = checkDate;
+	}
+	public String getCheckTime() {
+		return checkTime;
+	}
+	public void setCheckTime(String checkTime) {
+		this.checkTime = checkTime;
 	}
 }
