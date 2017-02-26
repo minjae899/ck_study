@@ -4,15 +4,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+<link href="resources/css/lobster_font.css" rel="stylesheet">
 <link href="resources/css/common.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="resources/bootstrap-3.3.2-dist/css/bootstrap.css" rel="stylesheet">
+<script src="resources/js/jquery-3.1.1.js"></script>
+<script src="resources/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <script>
 $(function(){
 	//var $m = $('#popupArea').modal(), api = $m.data('modal');
+	
+	$('#myModal').on('show.bs.modal', function(e){
+		list();
+	});
+	
 });
 function check(){
 	$('#command').val('check');
@@ -50,8 +54,7 @@ function list(){
 			/* alert(data);
 			$('#ajaxArea').append(data); */
 			//alert(data);
-			alert("hi");
-			$('#modalArea').modal(data);
+			$('.modal-body').html(data);
 		},
 		error : function( jqXRH, textStatus, errorThrown){
 			/*
@@ -68,7 +71,6 @@ function list(){
 					+ "errorThrown : " + errorThrown);
 		}
 	});
-	
 	//$('#command').val("list");
 	//$('#mainForm').submit();
 }
@@ -85,84 +87,23 @@ function list(){
 	<div>
 		<a class="ckbtn blue" href="javascript:check();">check</a>
 		<a class="ckbtn red" href="javascript:register();">register</a>
-		<!-- <a class="ckbtn orange" href="javascript:list();" >list</a> -->
-		<a class="ckbtn orange" href="javascript:list();" data-toggle="modal" data-target="#myModal">list</a>
+		<a class="ckbtn orange" href="javascript:list();" data-toggle="modal" data-target=".bs-example-modal-lg">list</a>
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
+<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">출석 리스트</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
 			</div>
-			<div class="modal-body">
-				<table>
-					<colgroup>
-						<col width="*">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-						<col width="11%">
-					</colgroup>
-					<thead>
-						<tr>
-							<th>날짜</th>
-							<th>김준성</th>
-							<th>김새봄</th>
-							<th>최민재</th>
-							<th>이기백</th>
-							<th>오형석</th>
-							<th>박정하</th>
-							<th>이상철</th>
-							<th>박민호</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>17.02.18</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>1000</td>
-						</tr>
-						<tr>
-							<td>합계</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>1000</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- <style type="text/css">
-	table{
-		width: 100%;
-	}
-</style> -->
+			<div class="modal-body"></div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </form>
 </body>

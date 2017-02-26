@@ -7,7 +7,7 @@ CREATE TABLE ATTEND
 DROP TABLE ATTEND PURGE;
 
 
-SELECT ID, CHECK_DATE FROM ATTEND;
+SELECT ID, TO_CHAR(CHECK_DATE,'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
 
 INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('chunkind', SYSDATE);
 
@@ -17,3 +17,37 @@ select * from attend;
 
 
 delete from ATTEND where rownum = 1;
+
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('momo0920', to_date('2017-02-18 09:00:00','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('chunkind', to_date('2017-02-18 09:00:00','YYYY-MM-DD HH24:MI:SS'));
+
+
+ /* 토요일만 가져오기. */
+SELECT ID							AS id
+	 , CHECK_DATE					AS checkDate
+	 , CASE TO_CHAR(CHECK_DATE, 'D')
+	 	WHEN '1' THEN '일요일'
+	 	WHEN '2' THEN '월요일'
+	 	WHEN '3' THEN '화요일'
+	 	WHEN '4' THEN '수요일'
+	 	WHEN '5' THEN '목요일'
+	 	WHEN '6' THEN '금요일'
+	 	WHEN '7' THEN '토요일'
+	   END 							AS dayOfTheWeek
+  FROM ATTEND
+ WHERE TO_CHAR(CHECK_DATE, 'D') = 7;
+
+
+SELECT TO_CHAR(CHECK_DATE, 'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
+
+
+
+
+
+
+
+
+
+
+
+

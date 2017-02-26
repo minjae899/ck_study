@@ -50,11 +50,15 @@ public class MainController extends HttpServlet{
 			view.forward(req, resp);
 		}
 		
-		else if(command.equals("list")){
+		/*else if(command.equals("list")){
 			List<MemberVO> attendList = service.selectAllAttendList();
-		}
+		}*/
 		
 		else if(command.equals("listAjax")){
+			List<MemberVO> attendList = service.selectAllAttendList();
+			
+			req.setAttribute("attendList", attendList);
+			
 			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/listFragment.jsp");
 			view.forward(req, resp);
 		}

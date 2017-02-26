@@ -11,7 +11,7 @@ import jdbc.util.JDBCUtil;
 import main.vo.AttendVO;
 import main.vo.MemberVO;
 
-public class MainDAO {
+public class JDBCMainDAO {
 
 	private JDBCUtil jdbc = new JDBCUtil();
 	private AttendVO avo = null;
@@ -104,11 +104,11 @@ public class MainDAO {
 	}
 	
 	public static void main(String[] args) {
-		MainDAO dao = new MainDAO();
+		JDBCMainDAO jdbcDao = new JDBCMainDAO();
 		
 		/*dao.insertCheck("chunkind");
-		AttendVO avo = dao.selectAttend("chunkind");*/
-		System.out.println(dao.selectSysdate());
+		AttendVO avo = jdbcDao.selectAttend("chunkind");*/
+		System.out.println(jdbcDao.selectSysdate());
 		
 	}
 	

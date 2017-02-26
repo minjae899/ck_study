@@ -2,22 +2,22 @@ package main.service.impl;
 
 import java.util.List;
 
-import main.dao.MainDAO;
+import main.dao.JDBCMainDAO;
 import main.service.MainService;
 import main.vo.AttendVO;
 import main.vo.MemberVO;
 
 public class MainServiceImpl implements MainService{
 
-	private MainDAO dao = new MainDAO();
+	private JDBCMainDAO jdbcDao = new JDBCMainDAO();
 	
 	@Override
 	public boolean doCheck(String id) {
 		boolean result = false;
 		AttendVO avo = new AttendVO();
-		avo = dao.selectAttend(id);
+		avo = jdbcDao.selectAttend(id);
 		if(avo == null){
-			dao.insertCheck("chunkind");
+			jdbcDao.insertCheck(id);
 			result = true;
 		}
 		return result;
@@ -31,7 +31,7 @@ public class MainServiceImpl implements MainService{
 
 	@Override
 	public List<MemberVO> selectAllAttendList() {
-		//dao.
+		//jdbcDao.
 		return null;
 	}
 
