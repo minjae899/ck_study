@@ -12,7 +12,7 @@
 <script>
 $(function(){
 	//var $m = $('#popupArea').modal(), api = $m.data('modal');
-	
+	list();
 	$('#myModal').on('show.bs.modal', function(e){
 		list();
 	});
@@ -79,17 +79,26 @@ function list(){
 <body>
 <form id="mainForm" action="/study/mainServlet.do" method="post">
 <input type="hidden" name="command" id="command" value="">
+<c:if test="${empty sessionScope.loginVO}">
 <div class="login_container">
 	<div>
-		<input type="text" class="input_text" name="user_id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" /><br/>
-		<input type="password" class="input_pass" name="user_pw" placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" /><br/>
+		<input type="text" class="input_text" name="user_id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+		<input type="password" class="input_pass" name="user_pw" placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
 	</div>
 	<div>
 		<a class="ckbtn blue" href="javascript:check();">check</a>
-		<a class="ckbtn red" href="javascript:register();">register</a>
+		<!-- <a class="ckbtn red" href="javascript:register();">register</a> -->
+	</div>
+</div>
+</c:if>
+
+<c:if test="${not empty sessionScope.loginVO}">
+<div class="login_container">
+	<div>
 		<a class="ckbtn orange" href="javascript:list();" data-toggle="modal" data-target=".bs-example-modal-lg">list</a>
 	</div>
 </div>
+</c:if>
 
 <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -98,7 +107,7 @@ function list(){
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myLargeModalLabel">지각비 현황</h4>
+				<h1 class="modal-title" id="myLargeModalLabel">지각비 현황</h1>
 			</div>
 			<div class="modal-body">로딩중....</div>
 		</div><!-- /.modal-content -->

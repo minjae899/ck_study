@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-	<h1>출석체크 완료!!</h1>
+	<h1>${message } </h1>
 	<a href="<c:url value='/index.html' />">홈으로</a>
 </div>
 </body>

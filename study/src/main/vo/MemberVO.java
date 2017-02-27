@@ -2,6 +2,15 @@ package main.vo;
 
 import java.util.List;
 
+/**
+ * @quickCode ##
+* @project  study
+* @path main.vo.MemberVO.java
+* @auth CK
+* @date 2017. 2. 27. 오후 4:51:38
+* @other 
+* TODO CK
+ */
 public class MemberVO {
 	
 	private int seq;

@@ -9,21 +9,38 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import cmmn.util.Util;
 import jdbc.util.JDBCUtil;
 import main.vo.AttendVO;
 import main.vo.MemberVO;
 
+/**
+ * @quickCode ##
+* @project  study
+* @path main.dao.JDBCMainDAO.java
+* @auth CK
+* @date 2017. 2. 27. 오후 4:50:04
+* @other 
+* TODO CK
+ */
 public class JDBCMainDAO {
 
 	private JDBCUtil jdbc = new JDBCUtil();
 	private AttendVO avo = null;
-	private MemberVO mvo = null;
 	private StringBuilder query = null;
 	private Connection conn = null;
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 	private int resultRow = 0;
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:08
+	* @other 
+	* @param id
+	* TODO CK
+	 */
 	public void insertCheck(String id){
 		conn = jdbc.getConnection();
 		query = new StringBuilder();
@@ -40,12 +57,21 @@ public class JDBCMainDAO {
 		
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:12
+	* @other 
+	* @return
+	* TODO CK
+	 */
 	public String selectSysdate(){
 		String result = "";
 		Connection conn = jdbc.getConnection();
 		query = new StringBuilder();
 		query.append("SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD') FROM DUAL");
 		try {
+			System.out.println(query.toString());
 			ps = conn.prepareStatement(query.toString());
 			rs = ps.executeQuery();
 			if(rs.next()){
@@ -57,12 +83,127 @@ public class JDBCMainDAO {
 		return result;
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 6:36:17
+	* @other 
+	* @return
+	* TODO CK
+	 */
+	public String selectAllowedIp(){
+		String result = "";
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append("SELECT IP FROM ALLOWED_IP WHERE CODE = 'CD001'");
+		try {
+			System.out.println(query.toString());
+			ps = conn.prepareStatement(query.toString());
+			rs = ps.executeQuery();
+			if(rs.next()){
+				result = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:16
+	* @other 
+	* @param id
+	* @return
+	* TODO CK
+	 */
+	public boolean checkId(String id){
+		boolean result = false;
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append("SELECT COUNT(1) FROM MEMBER WHERE ID = ?");
+		try{
+			System.out.println(query.toString());
+			ps = conn.prepareStatement(query.toString());
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				if(Integer.parseInt(rs.getString(1))>0){
+					result = true;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:19
+	* @other 
+	* @param id
+	* @param pw
+	* @return
+	* TODO CK
+	 */
+	public MemberVO doLogin(String id, String pw){
+		MemberVO rvo = new MemberVO();
+		
+		Connection conn = jdbc.getConnection();
+		query = new StringBuilder();
+		query.append(" SELECT SEQ");
+		query.append(" 	    , NAME");
+		query.append(" 	    , ID");
+		query.append(" 	    , PW");
+		query.append(" 	    , AGE");
+		query.append(" 	    , GENDER");
+		query.append(" 	    , TELL");
+		query.append(" 	    , REGISTER_DATE");
+		query.append(" 	    , UPDATE_DATE");
+		query.append("   FROM MEMBER");
+		query.append("  WHERE ID = ?");
+		query.append("    AND PW = ?");
+		try{
+			System.out.println(query.toString());
+			ps = conn.prepareStatement(query.toString());
+			ps.setString(1, id);
+			ps.setString(2, pw);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				rvo.setSeq(Integer.parseInt(rs.getString(1)));
+				rvo.setName(rs.getString(2));
+				rvo.setId(rs.getString(3));
+				rvo.setPw(rs.getString(4));
+				rvo.setAge(Integer.parseInt(rs.getString(5)));
+				rvo.setGender(rs.getString(6));
+				rvo.setTell(rs.getString(7));
+				rvo.setRegisterDate(rs.getString(8));
+				rvo.setUpdateDate(rs.getString(9));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return rvo;
+	}
+	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:24
+	* @other 
+	* @return
+	* TODO CK
+	 */
 	public int selectMemberCnt(){
 		int result = 0;
 		Connection conn = jdbc.getConnection();
 		query = new StringBuilder();
 		query.append("SELECT COUNT(1) FROM MEMBER");
 		try {
+			System.out.println(query.toString());
 			ps = conn.prepareStatement(query.toString());
 			rs = ps.executeQuery();
 			if(rs.next()){
@@ -74,6 +215,15 @@ public class JDBCMainDAO {
 		return result;
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:27
+	* @other 
+	* @param id
+	* @return
+	* TODO CK
+	 */
 	public AttendVO selectAttend(String id){
 		Connection conn = jdbc.getConnection();
 		query = new StringBuilder(); 
@@ -104,6 +254,15 @@ public class JDBCMainDAO {
 		return avo;
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:34
+	* @other 
+	* @param gijunDate
+	* @return
+	* TODO CK
+	 */
 	public List<MemberVO> selectAttendCheckAllMember(Set<String> gijunDate){
 		List<MemberVO> list = null;
 		MemberVO vo = null;
@@ -132,6 +291,7 @@ public class JDBCMainDAO {
 		query.append("			   AND CHECK_DATE BETWEEN TO_DATE((SELECT TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'DD') + 1 ,'YYYY-MM-DD') FROM DUAL),'YYYY-MM-DD') AND CURRENT_DATE");
 		query.append("			 ORDER BY CHECK_DATE DESC");
 		query.append("  	  ) C");
+		query.append(" ORDER BY GIJUN_DATE DESC, A.REGISTER_DATE ASC");
 		
 		try{
 			System.out.println(query.toString());
@@ -149,7 +309,7 @@ public class JDBCMainDAO {
 				if(null != rs.getString(5)){
 					vo.setCheckDate(rs.getString(5).substring(0, 10));
 					vo.setCheckTime(rs.getString(5).substring(11, rs.getString(5).length()));
-					vo.setPenalty(sumPenalty(rs.getString(5)));
+					vo.setPenalty(Util.sumPenalty(rs.getString(5)));
 				}
 				list.add(vo);
 			}
@@ -163,38 +323,15 @@ public class JDBCMainDAO {
 		return list;
 	}
 	
-	//과금발생 로직
-	public String sumPenalty(String fullDate){
-		String result = "";
-		int penaltyUnit = 100; //분당 지각 비용
-		int penaltyMax = 3000; //
-		
-		int hh = 0;
-		int mm = 0;
-		
-		try{
-			hh = Integer.parseInt(fullDate.substring(11, 13));
-			mm = Integer.parseInt(fullDate.substring(14, 16));
-			
-			if(hh >= 9){
-				if(mm == 0){
-					result = "";
-				}else if(mm>0 && mm<30){
-					result = (mm * penaltyUnit) + "";
-				}else{
-					result = penaltyMax + "";
-				}
-			}
-			
-		}catch(NullPointerException e){
-			result = "3000";
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:50:52
+	* @other 
+	* @param args
+	* TODO CK
+	* 테스트 메서드.
+	 */
 	public static void main(String[] args) {
 		JDBCMainDAO jdbcDao = new JDBCMainDAO();
 		
@@ -206,6 +343,26 @@ public class JDBCMainDAO {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

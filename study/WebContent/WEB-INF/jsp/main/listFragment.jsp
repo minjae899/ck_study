@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 	table{
 		width: 100%;
@@ -7,9 +8,14 @@
 	}
 </style>
 <div style="width: 100%;">
+	<c:if test="${not empty myPenalty}">
+		<div align="right">
+			<h2>지각비 합계 : <font color="red"><fmt:formatNumber value="${myPenalty}" pattern="#,###.##" /></font>원</h2>
+		</div>
+	</c:if>
 	<c:forEach var="resultMap" items="${resultList }">
 		<c:forEach var="val" items="${resultMap }">
-			<h1><font color="red">*</font> ${val.key }</h1>
+			<h2><font color="red">*</font> ${val.key }</h2>
 			<table class="table table-striped">
 				<colgroup>
 					<col width="20%">
@@ -34,11 +40,16 @@
 							<td>${obj.id }</td>
 							<td>${obj.checkDate }</td>
 							<td>${obj.checkTime }</td>
-							<td>${obj.penalty }</td>
+							<td><fmt:formatNumber value="${obj.penalty }" pattern="#,###.##" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</c:forEach>
 	</c:forEach>
+	<c:if test="${not empty myPenalty}">
+		<div align="right">
+			<h2>지각비 합계 : <font color="red"><fmt:formatNumber value="${myPenalty}" pattern="#,###.##" /></font>원</h2>
+		</div>
+	</c:if>
 </div>

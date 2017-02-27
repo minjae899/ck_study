@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NavigableSet;
-import java.util.Set;
 import java.util.TreeSet;
 
+import javax.servlet.http.HttpServletRequest;
+
+import cmmn.util.Util;
 import main.dao.JDBCMainDAO;
 import main.service.MainService;
 import main.vo.AttendVO;
@@ -16,6 +18,15 @@ public class MainServiceImpl implements MainService{
 
 	private JDBCMainDAO jdbcDao = new JDBCMainDAO();
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:49:42
+	* @other 
+	* @param id
+	* @return
+	* TODO CK
+	 */
 	@Override
 	public boolean doCheck(String id) {
 		boolean result = false;
@@ -28,6 +39,14 @@ public class MainServiceImpl implements MainService{
 		return result;
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:49:45
+	* @other 
+	* @return
+	* TODO CK
+	 */
 	@Override
 	public List<HashMap<String, ArrayList<MemberVO>>> selectAllMember() {
 		
@@ -60,6 +79,94 @@ public class MainServiceImpl implements MainService{
 		return result;
 	}
 	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:49:50
+	* @other 
+	* @param id
+	* @param pw
+	* @param rvo
+	* @return
+	* TODO CK
+	 */
+	@Override
+	public String doLogin(String id, String pw, MemberVO rvo) {
+		String returnPage = "";
+		
+		if(jdbcDao.checkId(id)){
+			rvo = jdbcDao.doLogin(id, pw);
+			if(null == rvo.getId()){
+				returnPage = "NotFoundPw";
+			}else{
+				returnPage = "success";
+			}
+		}else{
+			returnPage = "NotFoundId";
+		}
+		
+		
+		return returnPage;
+	}
+	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:49:54
+	* @other 
+	* @param id
+	* @param pw
+	* @param req
+	* @return
+	* TODO CK
+	 */
+	@Override
+	public String doLogin(String id, String pw, HttpServletRequest req) {
+		String returnPage = "";
+		MemberVO rvo = new MemberVO();
+		
+		String targetIp;
+		try {
+			targetIp = req.getRemoteAddr();
+			System.out.println("targetIp : " + targetIp);
+			
+			//아이피 체크.
+			boolean allowedIp = Util.checkIp(targetIp);
+			if(!allowedIp){
+				return "NotAllowedIp";
+			}
+			
+			//로그인 체크.
+			if(jdbcDao.checkId(id)){
+				rvo = jdbcDao.doLogin(id, pw);
+				if(null == rvo.getId()){
+					returnPage = "NotFoundPw";
+				}else{
+					returnPage = "success";
+					
+					req.getSession().setAttribute("loginVO", rvo);
+					String sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
+					System.out.println(sessionId);
+				}
+			}else{
+				returnPage = "NotFoundId";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return returnPage;
+	}
+	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 2. 27. 오후 4:49:58
+	* @other 
+	* @param args
+	* TODO CK
+	 */
 	public static void main(String[] args) {
 		MainService service = new MainServiceImpl();
 		
@@ -67,4 +174,5 @@ public class MainServiceImpl implements MainService{
 		//System.out.println(service.selectAllMember().toString());
 
 	}
+
 }
