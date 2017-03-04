@@ -15,7 +15,6 @@ public class JDBCUtil {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		MainVO vo = null;
 		
 		String url = "jdbc:oracle:thin:@victory.cs8zfdntdlzp.ap-northeast-2.rds.amazonaws.com:1521:orcl";
 		String user = "victory";
@@ -33,8 +32,8 @@ public class JDBCUtil {
 		rs= ps.executeQuery();
 		
 		if(rs.next()){
-			rvo.setUserId(rs.getString(1));
-			rvo.setUserPw(rs.getString(2));
+			rvo.setUser_id(rs.getString(1));
+			rvo.setUser_pass(rs.getString(2));
 			System.out.println(rs.getString(1));
 			System.out.println(rs.getString(2));
 		}

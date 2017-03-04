@@ -11,9 +11,17 @@ SELECT ID, TO_CHAR(CHECK_DATE,'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
 
 INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('chunkind', SYSDATE);
 
+
+
 DELETE FROM ATTEND;
 
-select * from attend;
+commit;
+
+select to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual
+
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('kjs', SYSDATE)
+
+SELECT TO_CHAR(CHECK_DATE, 'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
 
 delete from ATTEND where rownum = 1;
 
