@@ -119,16 +119,12 @@ public class MainController extends HttpServlet{
 		}
 		else if(command.equals("listAjax")){
 			System.out.println("list 호출..");
-<<<<<<< HEAD
 			
 			String sessionId = "";
 			if(null != req.getSession().getAttribute("loginVO")){
 				sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
 			}
-=======
->>>>>>> 6e34507468edf79d6b6a7b7e4065131499cc8f5a
 			
-			String sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
 			List<HashMap<String, ArrayList<MemberVO>>> list = service.selectAllMember();
 			
 			String myPenalty = "";
