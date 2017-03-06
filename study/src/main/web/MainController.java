@@ -19,12 +19,11 @@ import main.vo.MemberVO;
 
 /**
  * @quickCode ##
-* @project  study
-* @path main.web.MainController.java
-* @auth CK
-* @date 2017. 2. 27. 오후 4:49:33
-* @other 
-* TODO CK
+ * @project  study
+ * @path main.web.MainController.java
+ * @auth CK
+ * @date 2017. 2. 27. 오후 4:49:33
+ * @other
  */
 public class MainController extends HttpServlet{
 
@@ -32,33 +31,37 @@ public class MainController extends HttpServlet{
 
 	/**
 	 * @quickCode ##
-	* @auth CK
-	* @date 2017. 2. 27. 오후 4:49:30
-	* @other 
-	* @param req
-	* @param resp
-	* @throws ServletException
-	* @throws IOException
-	* TODO CK
+	 * @auth CK
+	 * @date 2017. 2. 27. 오후 4:49:30
+	 * @other 
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet
+	( HttpServletRequest req
+	, HttpServletResponse resp)throws ServletException, IOException {
+		
 		doPost(req,resp);
 	}
 	
 	/**
 	 * @quickCode ##
-	* @auth CK
-	* @date 2017. 2. 27. 오후 4:49:26
-	* @other 
-	* @param req
-	* @param resp
-	* @throws ServletException
-	* @throws IOException
-	* TODO CK
+	 * @auth CK
+	 * @date 2017. 2. 27. 오후 4:49:26
+	 * @other 
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost
+	( HttpServletRequest req
+	, HttpServletResponse resp)throws ServletException, IOException {
+		
 		String command = null;
 		String id = null;
 		String pw = null;
@@ -71,10 +74,11 @@ public class MainController extends HttpServlet{
 		
 		if(command.equals("main")){
 			System.out.println(req.getRemoteAddr() + " 메인 호출.");
+			
 			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/main.jsp");
 			view.forward(req, resp);
+			
 		}
-		
 		else if(command.equals("check")){
 			System.out.println("입력한 값 확인 id : " + id +", pw : " + pw);
 			/*
@@ -106,19 +110,17 @@ public class MainController extends HttpServlet{
 				System.out.println(sessionId);*/
 				service.doCheck(id);
 			}
-			
-			
+
 			//서블릿 버전
 			//viewCheck(req, resp);
 			//jsp 버전
 			RequestDispatcher view = req.getRequestDispatcher("WEB-INF/jsp/main/viewCheck.jsp");
 			view.forward(req, resp);
 		}
-		
 		else if(command.equals("listAjax")){
 			System.out.println("list 호출..");
-			String sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
 			
+			String sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
 			List<HashMap<String, ArrayList<MemberVO>>> list = service.selectAllMember();
 			
 			String myPenalty = "";
@@ -136,13 +138,12 @@ public class MainController extends HttpServlet{
 	
 	/**
 	 * @quickCode ##
-	* @auth CK
-	* @date 2017. 2. 27. 오후 4:49:18
-	* @other 
-	* @param req
-	* @param resp
-	* @throws IOException
-	* TODO CK
+	 * @auth CK
+	 * @date 2017. 2. 27. 오후 4:49:18
+	 * @other 
+	 * @param req
+	 * @param resp
+	 * @throws IOException
 	 */
 	public void viewCheck(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		resp.setContentType("text/html");
