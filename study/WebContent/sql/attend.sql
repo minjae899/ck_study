@@ -78,16 +78,54 @@ SELECT ID							AS id
  WHERE TO_CHAR(CHECK_DATE, 'D') = 7;
 
 
-SELECT TO_CHAR(CHECK_DATE, 'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
+SELECT ID, TO_CHAR(CHECK_DATE, 'YYYY-MM-DD HH24:MI:SS') FROM ATTEND;
+
+delete from attend;
+
+/* 오늘 출석 여부 확인 */
+SELECT ID
+	 , TO_CHAR(CHECK_DATE,'YYYY-MM-DD')
+  FROM ATTEND
+ WHERE ID = 'kjs'
+   AND TO_CHAR(CHECK_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 
 
 
 
-
-
-
-
-
-
-
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+/* 2017 - 03 - 03일 출석 상황 */
+   
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('kjs', to_date('2017-03-04 08:58:10','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('cmj', to_date('2017-03-04 09:12:00','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('ksb', to_date('2017-03-04 08:59:51','YYYY-MM-DD HH24:MI:SS'));
+/*INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('lgb', to_date('2017-03-04 00:00:00','YYYY-MM-DD HH24:MI:SS'));*/
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('ohs', to_date('2017-03-04 09:21:00','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('pjh', to_date('2017-03-04 08:53:32','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('lsc', to_date('2017-03-04 09:02:00','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO ATTEND(ID, CHECK_DATE) VALUES('pmh', to_date('2017-03-04 08:59:12','YYYY-MM-DD HH24:MI:SS'));
+   
+   
+   commit
+   
+   select * from attend
+  
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 

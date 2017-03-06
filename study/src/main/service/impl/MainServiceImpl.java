@@ -26,6 +26,8 @@ public class MainServiceImpl implements MainService{
 	* @param id
 	* @return
 	* TODO CK
+	* 오늘 출석 여부를 체크하여
+	* 출석을 하였다면 재출석이 안되도록..
 	 */
 	@Override
 	public boolean doCheck(String id) {

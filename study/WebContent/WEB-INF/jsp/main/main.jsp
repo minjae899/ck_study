@@ -12,9 +12,8 @@
 <script>
 $(function(){
 	//var $m = $('#popupArea').modal(), api = $m.data('modal');
-	list();
 	$('#myModal').on('show.bs.modal', function(e){
-		list();
+		listModal();
 	});
 	
 });
@@ -27,7 +26,7 @@ function register(){
 	alert("register");
 }
 
-function list(){
+function listModal(){
 	/*
 				- jquery properties
 				
@@ -74,46 +73,69 @@ function list(){
 	//$('#command').val("list");
 	//$('#mainForm').submit();
 }
+
+function queryModal(){
+	$.ajax({
+		url : "<c:url value='/study/queryServlet.do' />",
+		type : "POST",
+		data : {},
+		dataType : "html",
+		async : false,
+		error : function(jqXRH, textStatus, errorThrown){
+			alert("status : " + jqXHR.status + " \n"
+					+ "status text : " + jqXHR.statusText + " \n"
+					+ "response text : " + jqXHR.responseText + " \n"
+					+ "ready state : " + jqXHR.readyState + "\n"
+					+ "textStatus : " + textStatus + "\n"
+					+ "errorThrown : " + errorThrown);
+		},
+		success : function(data){
+			$("#queryModal").html(data);
+		}
+	});
+}
 </script>
 </head>
 <body>
 <form id="mainForm" action="/study/mainServlet.do" method="post">
-<input type="hidden" name="command" id="command" value="">
-<c:if test="${empty sessionScope.loginVO}">
-<div class="login_container">
-	<div>
-		<input type="text" class="input_text" name="user_id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
-		<input type="password" class="input_pass" name="user_pw" placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+	<input type="hidden" name="command" id="command" value="">
+	<div class="top">
+		<a data-toggle="modal" data-target=".bs-example-modal-lg">문의하기</a>
 	</div>
-	<div>
-		<a class="ckbtn blue" href="javascript:check();">check</a>
-		<!-- <a class="ckbtn red" href="javascript:register();">register</a> -->
+	<c:if test="${empty sessionScope.loginVO}">
+	<div class="login_container">
+		<div>
+			<input type="text" class="input_text" name="user_id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+			<input type="password" class="input_pass" name="user_pw" placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+		</div>
+		<div>
+			<a class="ckbtn blue" href="javascript:check();">check</a>
+			<!-- <a class="ckbtn red" href="javascript:register();">register</a> -->
+		</div>
 	</div>
-</div>
-</c:if>
-
-<c:if test="${not empty sessionScope.loginVO}">
-<div class="login_container">
-	<div>
-		<a class="ckbtn orange" href="javascript:list();" data-toggle="modal" data-target=".bs-example-modal-lg">list</a>
+	</c:if>
+	<c:if test="${not empty sessionScope.loginVO}">
+	<div class="login_container">
+		<div>
+			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target=".bs-example-modal-lg">list</a>
+		</div>
 	</div>
-</div>
-</c:if>
-
-<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h1 class="modal-title" id="myLargeModalLabel">지각비 현황</h1>
-			</div>
-			<div class="modal-body">로딩중....</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+	</c:if>
+	
+	<!--모달. -->
+	<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h1 class="modal-title" id="myLargeModalLabel">지각비 현황</h1>
+				</div>
+				<div class="modal-body">로딩중....</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </form>
 </body>
 </html>

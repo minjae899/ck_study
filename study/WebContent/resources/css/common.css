@@ -14,6 +14,7 @@
 .ckbtn:active{
 	transform: translateY(3px);
 }
+
 .ckbtn.blue{
 	background-color: #1f75d9;
 	border-bottom:5px solid #165195;
@@ -21,6 +22,7 @@
 .ckbtn.blue:active{
 	border-bottom:2px solid #165195;
 }
+
 .ckbtn.red{
 	background-color: #ff521e;
 	border-bottom:5px solid #c1370e;
@@ -36,10 +38,20 @@
 .ckbtn.orange:active{
 	border-bottom:2px solid #DB9700;
 }
+
+.ckbtn.gray{
+	background-color: #8C8C8C;
+	border-bottom:5px solid #5D5D5D;
+}
+.ckbtn.gray:active{
+	border-bottom:2px solid #5D5D5D;
+}
+
 input{
 	width: 400px;
 	height: 50px;
 }
+
 .login_container{
 	text-align: center;
 	margin-top: 15%;

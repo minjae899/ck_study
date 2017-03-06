@@ -223,6 +223,7 @@ public class JDBCMainDAO {
 	* @param id
 	* @return
 	* TODO CK
+	* 오늘 출석했는지 여부를 체크한다.
 	 */
 	public AttendVO selectAttend(String id){
 		Connection conn = jdbc.getConnection();

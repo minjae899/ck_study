@@ -117,7 +117,11 @@ public class MainController extends HttpServlet{
 		
 		else if(command.equals("listAjax")){
 			System.out.println("list 호출..");
-			String sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
+			
+			String sessionId = "";
+			if(null != req.getSession().getAttribute("loginVO")){
+				sessionId = ((MemberVO)req.getSession().getAttribute("loginVO")).getId();
+			}
 			
 			List<HashMap<String, ArrayList<MemberVO>>> list = service.selectAllMember();
 			
