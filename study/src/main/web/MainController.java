@@ -16,6 +16,8 @@ import cmmn.util.Util;
 import main.service.MainService;
 import main.service.impl.MainServiceImpl;
 import main.vo.MemberVO;
+import module.ModelAndView;
+import module.interfaces.Controller;
 
 /**
  * @quickCode ##
@@ -25,28 +27,8 @@ import main.vo.MemberVO;
  * @date 2017. 2. 27. 오후 4:49:33
  * @other
  */
-public class MainController extends HttpServlet{
+public class MainController implements Controller{
 
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @quickCode ##
-	 * @auth CK
-	 * @date 2017. 2. 27. 오후 4:49:30
-	 * @other 
-	 * @param req
-	 * @param resp
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	@Override
-	protected void doGet
-	( HttpServletRequest req
-	, HttpServletResponse resp)throws ServletException, IOException {
-		
-		doPost(req,resp);
-	}
-	
 	/**
 	 * @quickCode ##
 	 * @auth CK
@@ -57,8 +39,7 @@ public class MainController extends HttpServlet{
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	@Override
-	protected void doPost
+	protected void doPost1
 	( HttpServletRequest req
 	, HttpServletResponse resp)throws ServletException, IOException {
 		
@@ -140,32 +121,10 @@ public class MainController extends HttpServlet{
 		}
 	}
 	
-	/**
-	 * @quickCode ##
-	 * @auth CK
-	 * @date 2017. 2. 27. 오후 4:49:18
-	 * @other 
-	 * @param req
-	 * @param resp
-	 * @throws IOException
-	 */
-	public void viewCheck(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		resp.setContentType("text/html");
-		req.setCharacterEncoding("utf-8");
-		resp.setCharacterEncoding("utf-8");
-		
-		PrintWriter out = resp.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<html>");
-		out.println("<head>");
-		out.println("	<meta charset=\"utf-8\">");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("	<h1>출석체크 완료!!</h1>");
-		out.println("</body>");
-		out.println("</html>");
-		out.flush();
-		out.close();
+	@Override
+	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println(request.getRemoteAddr() + " 메인 호출.");
+		return new ModelAndView("WEB-INF/jsp/main/main.jsp");
 	}
 	
 }

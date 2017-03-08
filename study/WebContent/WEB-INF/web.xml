@@ -10,22 +10,25 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<servlet>
-		<servlet-name>mainServlet</servlet-name>
-		<servlet-class>main.web.MainController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>mainServlet</servlet-name>
-		<url-pattern>/mainServlet.do</url-pattern>
-	</servlet-mapping>
+	<!-- 한글 처리를 위한 필터. -->
+	<filter>
+		<filter-name>MVCFilter</filter-name>
+		<filter-class>filter.MVCFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MVCFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
+	<!-- 디스페처 서블릿. -->
 	<servlet>
-		<servlet-name>queryServlet</servlet-name>
-		<servlet-class>query.web.QueryController</servlet-class>
+		<display-name>DispatcherServlet</display-name>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>module.DispatcherServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>queryServlet</servlet-name>
-		<url-pattern>/queryServlet.do</url-pattern>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/DispatcherServlet</url-pattern>
 	</servlet-mapping>
 
 </web-app>
