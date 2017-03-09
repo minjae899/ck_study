@@ -1,7 +1,7 @@
 package module;
 
-import attend.web.AttendController;
 import main.web.MainController;
+import member.web.MemberController;
 import module.interfaces.Controller;
 
 //Controller를 생성하는 공장.
@@ -18,8 +18,8 @@ public class HandlerMapping {
 		Controller controller = null;
 		if(command.equals("main")){
 			controller = new MainController();
-		}else if(command.equals("check")){
-			controller = new AttendController();
+		}else if(command.equals("member")){
+			controller = new MemberController();
 		}
 		return controller;
 	}

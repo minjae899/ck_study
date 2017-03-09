@@ -13,7 +13,7 @@
 	<!-- 한글 처리를 위한 필터. -->
 	<filter>
 		<filter-name>MVCFilter</filter-name>
-		<filter-class>filter.MVCFilter</filter-class>
+		<filter-class>module.filter.MVCFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>MVCFilter</filter-name>

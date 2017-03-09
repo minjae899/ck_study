@@ -23,6 +23,10 @@ public class DispatcherServlet extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//로직은 여기다 작성...
 		String command = request.getParameter("command");
+		String resultPg = request.getParameter("resultPg");
+		
+		request.setAttribute("resultPg", resultPg);
+		
 		Controller controller = HandlerMapping.getInstance().createController(command);
 		
 		String path = "error.jsp";

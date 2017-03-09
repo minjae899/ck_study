@@ -1,4 +1,4 @@
-package main.service.impl;
+package member.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,14 +9,15 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import cmmn.util.Util;
-import main.dao.JDBCMainDAO;
-import main.service.MainService;
-import main.vo.AttendVO;
-import main.vo.MemberVO;
+import member.dao.MemberDAO;
+import member.dao.impl.MemberJDBCDAOImpl;
+import member.service.MemberService;
+import member.vo.AttendVO;
+import member.vo.MemberVO;
 
-public class MainServiceImpl implements MainService{
+public class MemberServiceImpl implements MemberService{
 
-	private JDBCMainDAO jdbcDao = new JDBCMainDAO();
+	MemberDAO dao = new MemberJDBCDAOImpl();
 	
 	/**
 	 * @quickCode ##
@@ -30,12 +31,12 @@ public class MainServiceImpl implements MainService{
 	* 출석을 하였다면 재출석이 안되도록..
 	 */
 	@Override
-	public boolean doCheck(String id) {
+	public boolean checkAttend(String id) {
 		boolean result = false;
 		AttendVO avo = new AttendVO();
-		avo = jdbcDao.selectAttend(id);
+		avo = dao.selectAttend(id);
 		if(avo == null){
-			jdbcDao.insertCheck(id);
+			dao.insertAttend(id);
 			result = true;
 		}
 		return result;
@@ -55,7 +56,7 @@ public class MainServiceImpl implements MainService{
 		List<HashMap<String, ArrayList<MemberVO>>> result = new ArrayList<HashMap<String, ArrayList<MemberVO>>>();
 		
 		TreeSet<String> gijunDate = new TreeSet<String>();
-		List<MemberVO> list = jdbcDao.selectAttendCheckAllMember(gijunDate);
+		List<MemberVO> list = dao.selectAttendCheckAllMember(gijunDate);
 		
 		NavigableSet<String> gijunDateDESC = gijunDate.descendingSet();
 		
@@ -63,7 +64,7 @@ public class MainServiceImpl implements MainService{
 		String[] splitGijun = rGijun.split(", ");
 		
 		//int s = splitGijun.length;
-		int s = jdbcDao.selectMemberCnt();
+		int s = dao.selectMemberCnt();
 		int cnt = 0;
 		ArrayList<MemberVO> containList = new ArrayList<MemberVO>();
 		HashMap<String, ArrayList<MemberVO>> obj = new HashMap<String, ArrayList<MemberVO>>();
@@ -84,36 +85,6 @@ public class MainServiceImpl implements MainService{
 	/**
 	 * @quickCode ##
 	* @auth CK
-	* @date 2017. 2. 27. 오후 4:49:50
-	* @other 
-	* @param id
-	* @param pw
-	* @param rvo
-	* @return
-	* TODO CK
-	 */
-	@Override
-	public String doLogin(String id, String pw, MemberVO rvo) {
-		String returnPage = "";
-		
-		if(jdbcDao.checkId(id)){
-			rvo = jdbcDao.doLogin(id, pw);
-			if(null == rvo.getId()){
-				returnPage = "NotFoundPw";
-			}else{
-				returnPage = "success";
-			}
-		}else{
-			returnPage = "NotFoundId";
-		}
-		
-		
-		return returnPage;
-	}
-	
-	/**
-	 * @quickCode ##
-	* @auth CK
 	* @date 2017. 2. 27. 오후 4:49:54
 	* @other 
 	* @param id
@@ -123,7 +94,7 @@ public class MainServiceImpl implements MainService{
 	* TODO CK
 	 */
 	@Override
-	public String doLogin(String id, String pw, HttpServletRequest req) {
+	public String login(HttpServletRequest req, MemberVO pvo) {
 		String returnPage = "";
 		MemberVO rvo = new MemberVO();
 		
@@ -139,8 +110,8 @@ public class MainServiceImpl implements MainService{
 			}
 			
 			//로그인 체크.
-			if(jdbcDao.checkId(id)){
-				rvo = jdbcDao.doLogin(id, pw);
+			if(dao.selectId(pvo.getId())){
+				rvo = dao.selectLogin(pvo);
 				if(null == rvo.getId()){
 					returnPage = "NotFoundPw";
 				}else{
@@ -159,22 +130,6 @@ public class MainServiceImpl implements MainService{
 		}
 		
 		return returnPage;
-	}
-	
-	/**
-	 * @quickCode ##
-	* @auth CK
-	* @date 2017. 2. 27. 오후 4:49:58
-	* @other 
-	* @param args
-	* TODO CK
-	 */
-	public static void main(String[] args) {
-		MainService service = new MainServiceImpl();
-		
-		//service.doCheck("chunkind");
-		//System.out.println(service.selectAllMember().toString());
-
 	}
 
 }

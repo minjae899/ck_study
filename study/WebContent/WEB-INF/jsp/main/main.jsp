@@ -20,8 +20,9 @@ $(function(){
 	});
 	
 });
-function check(){
-	$('#command').val('check');
+function login(){
+	$('#command').val('member');
+	$('#resultPg').val('login');
 	$('#mainForm').submit();
 }
 
@@ -49,7 +50,7 @@ function listModal(){
 	*/
 	$.ajax({
 		type : "POST",
-		url : "<c:url value = '/mainServlet.do?command=listAjax' />",
+		url : "<c:url value = '/DispatcherServlet?command=member&&resultPg=listAjax' />",
 		data : {},
 		dataType : "html",
 		success : function(data){
@@ -100,19 +101,20 @@ function queryModal(){
 </script>
 </head>
 <body>
-<form id="mainForm" action="/study/mainServlet.do" method="post">
+<form id="mainForm" action="/study/DispatcherServlet" method="post">
 	<input type="hidden" name="command" id="command" value="">
+	<input type="hidden" name="resultPg" id="resultPg" value="">
 	<div class="top">
-		<a data-toggle="modal" data-target="#queryModal">문의하기</a>
+		<!-- <a data-toggle="modal" data-target="#queryModal">문의하기</a> -->
 	</div>
 	<c:if test="${empty sessionScope.loginVO}">
 	<div class="login_container">
 		<div>
-			<input type="text" class="input_text" name="user_id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
-			<input type="password" class="input_pass" name="user_pw" placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+			<input type="text" class="input_text" name="id" placeholder="input your id" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
+			<input type="password" class="input_pass" name=pw placeholder="input your password" style="margin-bottom: 8px; font-size: 25px;" maxlength="12" /><br/>
 		</div>
 		<div>
-			<a class="ckbtn blue" href="javascript:check();">check</a>
+			<a class="ckbtn blue" href="javascript:login();">check</a>
 			<!-- <a class="ckbtn red" href="javascript:register();">register</a> -->
 		</div>
 	</div>

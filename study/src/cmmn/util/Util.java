@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import main.dao.JDBCMainDAO;
-import main.vo.MemberVO;
+import common.dao.CommonDAO;
+import common.dao.impl.CommonDAOImpl;
+import member.vo.MemberVO;
 
 /**
  * @quickCode ##
@@ -106,10 +107,10 @@ public class Util {
 	public static boolean checkIp(String targetIp){
 		boolean result = true;
 		
-		JDBCMainDAO jdbc = new JDBCMainDAO();
+		CommonDAO cdao = new CommonDAOImpl();
 		
 		//게이트웨이 주소.
-		String gatewayIp = jdbc.selectAllowedIp();
+		String gatewayIp = cdao.selectAllowedIp();
 		if(null == gatewayIp || "".equals(gatewayIp) || "null".equals(gatewayIp)){
 			return true;
 		}
@@ -150,6 +151,27 @@ public class Util {
 		System.out.println(Util.checkIp(ip));
 	}
 	
-	
+	/**
+	 * @quickCode ##
+	* @auth CK
+	* @date 2017. 3. 9. 오전 11:03:23
+	* @other 
+	* @param args
+	* TODO CK
+	* 널체크
+	 */
+	public static Object nvl(Object pram){
+		Object result = pram;
+		
+		try{
+			if(null == pram || "" == pram){
+				throw new NullPointerException();
+			}
+		}catch(NullPointerException e){
+			result = "";
+		}
+		
+		return result;
+	}
 	
 }

@@ -1,11 +1,11 @@
-package main.vo;
+package member.vo;
 
 import java.util.List;
 
 /**
  * @quickCode ##
 * @project  study
-* @path main.vo.MemberVO.java
+* @path member.vo.MemberVO.java
 * @auth CK
 * @date 2017. 2. 27. 오후 4:51:38
 * @other 

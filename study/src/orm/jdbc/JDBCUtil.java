@@ -1,4 +1,4 @@
-package jdbc.util;
+package orm.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import main.vo.MemberVO;
+import member.vo.MemberVO;
 
 public class JDBCUtil {
 	

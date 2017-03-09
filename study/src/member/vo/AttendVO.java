@@ -1,4 +1,4 @@
-package main.vo;
+package member.vo;
 
 public class AttendVO {
 	private String id;
