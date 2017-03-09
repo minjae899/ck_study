@@ -11,12 +11,20 @@
 <script src="resources/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <script>
 $(function(){
+<<<<<<< HEAD
 	//var $m = $('#popupArea').modal(), api = $m.data('modal');
 	$('#myModal').on('show.bs.modal', function(e){
 		
 		temp
 		
+=======
+	$('#listModal').on('show.bs.modal', function(e){
+>>>>>>> fdbd6cb1ef8fff04fc33ae55222c92d21499bffe
 		listModal();
+	});
+	
+	$('#queryModal').on('show.bs.modal', function(e){
+		queryModal();
 	});
 	
 });
@@ -49,7 +57,7 @@ function listModal(){
 	*/
 	$.ajax({
 		type : "POST",
-		url : "/study/mainServlet.do?command=listAjax",
+		url : "<c:url value = '/mainServlet.do?command=listAjax' />",
 		data : {},
 		dataType : "html",
 		success : function(data){
@@ -65,10 +73,10 @@ function listModal(){
 				responseText : url의 response full text를 출력 합니다.
 				readyState : ajax readyState를 출력 합니다. (readyState는 부록 1 참조)
 			*/
-			alert("status : " + jqXHR.status + " \n"
-					+ "status text : " + jqXHR.statusText + " \n"
-					+ "response text : " + jqXHR.responseText + " \n"
-					+ "ready state : " + jqXHR.readyState + "\n"
+			alert("status : " + jqXRH.status + " \n"
+					+ "status text : " + jqXRH.statusText + " \n"
+					+ "response text : " + jqXRH.responseText + " \n"
+					+ "ready state : " + jqXRH.readyState + "\n"
 					+ "textStatus : " + textStatus + "\n"
 					+ "errorThrown : " + errorThrown);
 		}
@@ -79,20 +87,20 @@ function listModal(){
 
 function queryModal(){
 	$.ajax({
-		url : "<c:url value='/study/queryServlet.do' />",
 		type : "POST",
+		url : "<c:url value='/queryServlet.do' />",
 		data : {},
 		dataType : "html",
-		async : false,
 		error : function(jqXRH, textStatus, errorThrown){
-			alert("status : " + jqXHR.status + " \n"
-					+ "status text : " + jqXHR.statusText + " \n"
-					+ "response text : " + jqXHR.responseText + " \n"
-					+ "ready state : " + jqXHR.readyState + "\n"
+			alert("status : " + jqXRH.status + " \n"
+					+ "status text : " + jqXRH.statusText + " \n"
+					+ "response text : " + jqXRH.responseText + " \n"
+					+ "ready state : " + jqXRH.readyState + "\n"
 					+ "textStatus : " + textStatus + "\n"
 					+ "errorThrown : " + errorThrown);
 		},
 		success : function(data){
+			alert(data);
 			$("#queryModal").html(data);
 		}
 	});
@@ -103,7 +111,7 @@ function queryModal(){
 <form id="mainForm" action="/study/mainServlet.do" method="post">
 	<input type="hidden" name="command" id="command" value="">
 	<div class="top">
-		<a data-toggle="modal" data-target=".bs-example-modal-lg">문의하기</a>
+		<a data-toggle="modal" data-target="#queryModal">문의하기</a>
 	</div>
 	<c:if test="${empty sessionScope.loginVO}">
 	<div class="login_container">
@@ -120,13 +128,17 @@ function queryModal(){
 	<c:if test="${not empty sessionScope.loginVO}">
 	<div class="login_container">
 		<div>
+<<<<<<< HEAD
 			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target=".bs-example-modal-lg" data-temp="list">list</a>
+=======
+			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target="#listModal">list</a>
+>>>>>>> fdbd6cb1ef8fff04fc33ae55222c92d21499bffe
 		</div>
 	</div>
 	</c:if>
 	
 	<!--모달. -->
-	<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div id="listModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -139,6 +151,8 @@ function queryModal(){
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	<!--모달. -->
+	<div id="queryModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>
 </form>
 </body>
 </html>

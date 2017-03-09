@@ -26,7 +26,7 @@
 								<td><textarea id="content" name="content" class="formWidth"></textarea></td>
 							</tr>
 							<tr class="last">
-								<th><label fot="fileAdd">파일첨부</label></th>
+								<th><label for="fileAdd">파일첨부</label></th>
 								<td><input type="file" id="fileAdd" name="fileAdd" /></td>
 							</tr>
 						</tbody>
