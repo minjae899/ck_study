@@ -13,6 +13,9 @@
 $(function(){
 	//var $m = $('#popupArea').modal(), api = $m.data('modal');
 	$('#myModal').on('show.bs.modal', function(e){
+		
+		temp
+		
 		listModal();
 	});
 	
@@ -117,7 +120,7 @@ function queryModal(){
 	<c:if test="${not empty sessionScope.loginVO}">
 	<div class="login_container">
 		<div>
-			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target=".bs-example-modal-lg">list</a>
+			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target=".bs-example-modal-lg" data-temp="list">list</a>
 		</div>
 	</div>
 	</c:if>
