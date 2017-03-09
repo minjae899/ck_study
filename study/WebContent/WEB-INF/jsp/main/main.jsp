@@ -11,15 +11,7 @@
 <script src="resources/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <script>
 $(function(){
-<<<<<<< HEAD
-	//var $m = $('#popupArea').modal(), api = $m.data('modal');
-	$('#myModal').on('show.bs.modal', function(e){
-		
-		temp
-		
-=======
 	$('#listModal').on('show.bs.modal', function(e){
->>>>>>> fdbd6cb1ef8fff04fc33ae55222c92d21499bffe
 		listModal();
 	});
 	
@@ -128,11 +120,7 @@ function queryModal(){
 	<c:if test="${not empty sessionScope.loginVO}">
 	<div class="login_container">
 		<div>
-<<<<<<< HEAD
-			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target=".bs-example-modal-lg" data-temp="list">list</a>
-=======
 			<a class="ckbtn orange" href="#;" data-toggle="modal" data-target="#listModal">list</a>
->>>>>>> fdbd6cb1ef8fff04fc33ae55222c92d21499bffe
 		</div>
 	</div>
 	</c:if>
