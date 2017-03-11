@@ -27,12 +27,16 @@ public class MemberController implements Controller{
 		MemberService service = new MemberServiceImpl();
 		
 		MemberVO pvo = new MemberVO();
-		pvo.setId((String) Util.nvl(request.getParameter("id")));
-		pvo.setPw((String) Util.nvl(request.getParameter("pw")));
+		pvo.setId(request.getParameter("id"));
+		pvo.setPw(request.getParameter("pw"));
 		
 		ModelAndView mv = new ModelAndView();
 		
 		System.out.println("입력한 값 확인 id : " + pvo.getId() +", pw : " + pvo.getPw());
+		
+		id = pvo.getId();
+		pw = pvo.getPw();
+		
 		
 		if(resultPg.equals("login")){
 			String result = service.login(request, pvo);

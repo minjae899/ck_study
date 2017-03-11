@@ -12,9 +12,25 @@
 		<servlet-name>GenericTest1</servlet-name>
 		<url-pattern>/TEST1</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GenericTest2</servlet-name>
+		<servlet-class>basic.step2.GenericTest2</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>GenericTest1</servlet-name>
+		<servlet-name>GenericTest2</servlet-name>
 		<url-pattern>/TEST2</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GenericTest3</servlet-name>
+		<servlet-class>basic.step3.HttpServletTest3</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GenericTest3</servlet-name>
+		<url-pattern>/TEST3</url-pattern>
+	</servlet-mapping>
+	
+	<!--  -->
 
 </web-app>
