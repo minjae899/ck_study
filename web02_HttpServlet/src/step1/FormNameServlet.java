@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class FormNameServlet extends HttpServlet{
 
-	@Override
+	/*@Override
 	protected void doGet
 	( HttpServletRequest req
 	, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +25,20 @@ public class FormNameServlet extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		out.print("<h1>"+name+"</h1>");
 		out.close();
+	}*/
+	
+	@Override
+	protected void service
+	( HttpServletRequest req
+	, HttpServletResponse res) throws ServletException, IOException {
+		
+		super.service(req, res);
+		
+		String name = req.getParameter("name");
+		PrintWriter out = res.getWriter();
+		out.print("<h1>"+name+"</h1>");
+		out.close();
+		
 	}
 	
 }
