@@ -14,7 +14,6 @@ public class HttpServletTest4 extends HttpServlet{
 	protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.service(arg0, arg1);
-		awejfoiejwafio;ejwaf;oij
 	}
 	
 	@Override
