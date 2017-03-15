@@ -28,7 +28,7 @@ class HttpServlet extends GenericServlet{
 	void doGet(){
 		
 	}
-	
+
 	void doPost(){
 		
 	}
