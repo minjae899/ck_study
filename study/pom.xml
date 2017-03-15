@@ -78,7 +78,18 @@
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
 		    <version>3.1.1</version>
+<<<<<<< HEAD
 		</dependency>	
+=======
+		</dependency>
+
+		<!-- JSONParser를 사용하기 위해 라이브러리 추가. -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+>>>>>>> 5e6734dd25a0f624d56eefd8349e59b727e185f6
 		
 	</dependencies>
 	

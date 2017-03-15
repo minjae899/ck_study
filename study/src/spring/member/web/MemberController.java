@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
 	
+	
 	@RequestMapping(value="/login.do")
 	public String login(HttpServletRequest req, HttpServletResponse res){
 		
 		System.out.println("입장~");
 		
-		return "";
+		return "member/loginConfirm";
 	}
 	
 }
