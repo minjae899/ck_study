@@ -15,6 +15,25 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	
+	<!-- ojdbc가 다운이 안되서 넣음. -->
+	<repositories>
+	    <repository>
+	        <id>mvn2</id>
+	        <url>http://repo1.maven.org/maven2/</url>
+	        <releases>
+	            <enabled>true</enabled>
+	        </releases>
+	        <snapshots>
+	            <enabled>true</enabled>
+	        </snapshots>
+	    </repository>
+	    <repository>
+	         <id>oracle</id>
+	         <name>ORACLE JDBC Repository</name>
+	         <url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
+	    </repository>
+	</repositories>
+
 	<dependencies>
 	
 		<!-- spring libs.. -->
@@ -77,6 +96,13 @@
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
 		    <version>3.1.1</version>
+		</dependency>
+
+		<!-- 일단 myBatis 사용때문에 넣었다... -->
+		<dependency>
+		    <groupId>commons-dbcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		    <version>1.4</version>
 		</dependency>
 
 		<!-- JSONParser를 사용하기 위해 라이브러리 추가. -->
