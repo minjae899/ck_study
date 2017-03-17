@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.member.dao.MemberMapper">
+
+	<resultMap id="memberMap" type="spring.member.vo.MemberVO">
+		<result property="seq" column="SEQ"/>
+		<result property="id" column="ID"/>
+		<result property="pw" column="PW"/>
+		<result property="age" column="AGE"/>
+		<result property="gender" column="GENDER"/>
+		<result property="tell" column="TELL"/>
+		<result property="registerDate" column="REGISTER_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+	</resultMap>
+
+	<select id="selectId" resultType="int" parameterType="string">
+		/* selectId - 아이디를 검색하여 있으면 카운트 한다. */
+		SELECT COUNT(1) FROM MEMBER WHERE ID = #{value}
+	</select>
+	
+	<select id="selectAttend" parameterType="string" resultType="attendVO">
+		/* selectAttend - 오늘 출석했는지 여부를 체크한다. */
+		SELECT ID
+	   		 , TO_CHAR(CHECK_DATE,'YYYY-MM-DD')
+		  FROM ATTEND
+ 		 WHERE ID = #{value}
+	 	   AND TO_CHAR(CHECK_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	
+	<insert id="insertAttend" parameterType="string">
+		/* insertAttend - 출석. */
+		INSERT INTO ATTEND(ID, CHECK_DATE) VALUES(#{value}, SYSDATE)
+	</insert>
+	
+	
+	<select id="selectLogin" parameterType="memberVO" resultMap="memberMap">
+		/* selectLogin - 로그인. */
+		SELECT SEQ
+		     , NAME
+		     , ID
+		     , PW
+		     , AGE
+		     , GENDER
+		     , TELL
+		     , REGISTER_DATE
+		     , UPDATE_DATE
+	      FROM MEMBER
+	     WHERE ID = #{id}
+	   	   AND PW = #{pw}
+	</select>
+	
+	
+	<select id="selectMemberCnt" resultType="int">
+		/* selectMemberCnt - 모든 회원의 수 */
+		SELECT COUNT(1) FROM MEMBER
+	</select>
+	
+	
+	<select id="selectAttendCheckAllMember" resultType="memberVO">
+		/* selectAttendCheckAllMember - 출석된 모든 회원 */
+		<![CDATA[
+		SELECT A.ID
+			 , A.NAME
+			 , A.TELL
+			 , C.CHECK_DATE AS GIJUN_DATE
+			 , (
+			 		SELECT MIN(TO_CHAR(B.CHECK_DATE, 'YYYY-MM-DD HH24:MI'))
+			 		  FROM ATTEND B
+			 		 WHERE A.ID = B.ID
+			 		   AND TO_CHAR(B.CHECK_DATE, 'YYYY-MM-DD') = C.CHECK_DATE
+			 	   ) AS ATTEND_DATE
+		  FROM MEMBER A
+		     , (
+		  			SELECT TO_CHAR(SUM.CHECK_DATE,'YYYY-MM-DD') AS CHECK_DATE
+					  FROM (
+								SELECT TO_DATE((SELECT TO_CHAR(SYSDATE,'YYYY') || '0101' FROM DUAL),'YYYYMMDD') + (ROWNUM-1) AS CHECK_DATE
+									 , TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS CURRENT_DATE
+								  FROM DUAL CONNECT BY LEVEL <= 365
+						   ) SUM
+					 WHERE TO_CHAR(CHECK_DATE, 'D') = 7
+					   AND CHECK_DATE BETWEEN TO_DATE((SELECT TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'DD') + 1 ,'YYYY-MM-DD') FROM DUAL),'YYYY-MM-DD') AND CURRENT_DATE
+					 ORDER BY CHECK_DATE DESC
+		  	   ) C
+ 		 ORDER BY GIJUN_DATE DESC, A.REGISTER_DATE ASC
+ 		 ]]>
+	</select>
+	
+	<select id="selectGijunDate" resultType="string">
+		/* selectGijunDate - 스터디 기준이 되는 날을 구해온다. */
+		<![CDATA[
+		SELECT TO_CHAR(SUM.CHECK_DATE,'YYYY-MM-DD') AS GIJUN_DATE
+		  FROM (
+					SELECT TO_DATE((SELECT TO_CHAR(SYSDATE,'YYYY') || '0101' FROM DUAL),'YYYYMMDD') + (ROWNUM-1) AS CHECK_DATE
+						 , TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS CURRENT_DATE
+					  FROM DUAL CONNECT BY LEVEL <= 365
+			   ) SUM
+		 WHERE TO_CHAR(CHECK_DATE, 'D') = 7
+		   AND CHECK_DATE BETWEEN TO_DATE((SELECT TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'DD') + 1 ,'YYYY-MM-DD') FROM DUAL),'YYYY-MM-DD') AND CURRENT_DATE
+		 ORDER BY CHECK_DATE DESC
+		]]>
+	</select>
+	
+</mapper>

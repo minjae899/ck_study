@@ -4,22 +4,18 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
 						http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
+	
+	
+	
  	<display-name>study</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<!-- 한글 처리를 위한 필터. -->
-	<!-- <filter>
-		<filter-name>MVCFilter</filter-name>
-		<filter-class>module.filter.MVCFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>MVCFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
-	<!-- 스프링 필터 이용. -->
+
+
+	<!-- 필터 설정 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -33,7 +29,9 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 설정파일 읽기. -->
+
+
+	<!-- context로 시작하는 xml설정파일 읽기 -->
 	<context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -43,29 +41,41 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    
 
-	<!-- 디스페처 서블릿. -->
-	<!-- <servlet>
-		<display-name>DispatcherServlet</display-name>
-		<servlet-name>DispatcherServlet</servlet-name>
-		<servlet-class>module.DispatcherServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DispatcherServlet</servlet-name>
-		<url-pattern>/DispatcherServlet</url-pattern>
-	</servlet-mapping> -->
-	<!-- 스프링 디스페처 서블릿 이용. -->
+	<!-- dispatcher servlet 스프링으로 적용 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/config/beanConf.xml</param-value>
+			<param-value>/WEB-INF/config/dispatch-servlet.xml</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	<!-- log4J2 설정 -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:spring/log4j2.xml</param-value>
+    </context-param>
+    <!-- log4jRefreshInterval 을 세팅하면 log4j.xml 에서 level 이나 로그출력 패턴 변경을 하면 자동 리프레쉬 된다. -->
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>60000</param-value>
+    </context-param>
+    <listener>
+    <!-- listener-class에 등록되어 있는 Log4jConfigListener는 log4j라는 로깅 프레임워크를 초기화 하는 클래스이다.
+    	 이 클래스를 초기화 할 때 log4jConfigLocation context-param을 넘겨준다. -->
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+
 
 </web-app>

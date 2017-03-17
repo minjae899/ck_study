@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.common.dao.CommonMapper">
+
+	<select id="selectSysdate" resultType="string">
+		/* selectSysdate - 현재 시간 구하기. */
+		SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD') FROM DUAL
+	</select>
+	
+	<select id="selectAllowedIp" resultType="string">
+		/* selectAllowedIp - 허용된 아이피 구하기. */
+		SELECT IP FROM ALLOWED_IP WHERE CODE = 'CD001'
+	</select>
+	
+</mapper>
